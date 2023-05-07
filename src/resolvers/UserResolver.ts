@@ -1,26 +1,25 @@
-import { Arg,Mutation, Query, Resolver } from 'type-graphql';
-import { User } from '../entity/User.js';
-import  {InputUser} from './UserInput.js'
+import { Resolver, Query,Mutation, Arg } from "type-graphql";
+import  User  from "../entity/User.js";
+import {GraphQLError}from "graphql"
+import { UserInput } from "../input/UserInput.js";
+
 
 @Resolver(User)
-export class UserReolver{
+export class UserResolver{
 
+   @Query(()=> User)
+   async users( @Arg('userId')userId: number){
+      let user = new User()
+      user.id= userId
+      return await user.findUser()
+   }
 
-    @Query(() => User, { nullable: true })
-  async userFin(@Arg("id") id: number): Promise<User | undefined> {
-     return new User()
-  }
-   @Mutation(() => User ,{nullable:true})
-   async user(@Arg("userCreate") userCreate : InputUser){
-      let user : User | null = new User(userCreate)
-      await user.createUser()
-
-      return user
-      
+   @Mutation(()=> User) 
+   async userCreate(@Arg("create") create: UserInput ){
+      let user: User | null =new User(create)
+	 await user.createUser()
+      return await user.findUser()
 
    }
 
-
-
 }
-
