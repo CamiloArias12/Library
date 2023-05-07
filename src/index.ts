@@ -9,7 +9,8 @@ await AppDataSource.initialize()
 
 
 const schema = await  buildSchema ({
-   resolvers :[UserReolver]
+   resolvers :[UserReolver],
+   validate: {forbidUnknownValues: false}
 })
 
 
