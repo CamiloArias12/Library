@@ -1,16 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, Repository } from "typeorm"
-import {AppDataSource}  from "../data-source.js"
-import {Field, ID, ObjectType} from "type-graphql"
-
-
-@ObjectType("UserType")
+import { Field, ObjectType } from "type-graphql"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Repository, PrimaryColumn, } from "typeorm"
+import { AppDataSource } from "../data-source.js"
+import  type { IUser } from "../interfaces/IUser.js"
+import  Loan from "./Loan.js"
 @Entity()
-export class User implements IUser {
+@ObjectType("User")
+export default class User {
+   private repository: Repository<User>
 
-   private repository :Repository<User>
-   
-    @Field(() => ID)
-    @PrimaryGeneratedColumn()
+    @Field()
+    @PrimaryColumn()
     id: number
 
     @Field()
@@ -23,26 +22,36 @@ export class User implements IUser {
 
     @Field()
     @Column()
-    age: number
+    phone:string
 
-   constructor (params?: IUser){
+    @Field()
+    @Column()
+    address:string
+
+    @Field()
+    @Column({unique: true})
+    email:string
+   
+    @Field()
+    @Column()
+    password: string
+
+   @OneToMany(() => Loan, (loan) => loan.user)
+   loans: Loan[];
+
+   constructor(params?: IUser){
       Object.assign(this,params)
-      this.repository= AppDataSource.getRepository(User)
-
+      this.repository =AppDataSource.getRepository(User)
    }
 
-   async createUser(): Promise<String>{
-    await this.repository.save(this);
-    return "Operation succesfull"
+
+   async createUser(): Promise <void>{
+       await this.repository.save(this);
+   }
+
+   async findUser(): Promise <User | null>{
+      return await this.repository.findOneBy({id: this.id});
    }
 
 }
 
-
-export interface IUser{
-   id?: number
-   firstName:string
-   lastName:string
-   age:number
-
-}
