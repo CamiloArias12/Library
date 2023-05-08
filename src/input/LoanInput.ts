@@ -13,7 +13,7 @@ export class LoanInput implements ILoan {
   returnDate: Date;
 
   @Field()
-  isReturned: boolean;
+  returned: boolean;
 
   @Field()
   userId: number;
