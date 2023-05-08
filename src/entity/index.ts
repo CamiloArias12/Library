@@ -6,6 +6,8 @@ import Loan from "./Loan.js";
 
 const entities : Array<any>=[
    Loan,
+   Book,
+   Author,
    User
 ]
 

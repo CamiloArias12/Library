@@ -1,5 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
-import {Repository, Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import {Repository, Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable} from 'typeorm';
+import type { Relation } from 'typeorm';
 import { AppDataSource } from '../data-source.js';
 import type { IBook } from '../interfaces/IBook.js';
 import  Author  from './Author.js';
@@ -44,8 +45,8 @@ export default class Book {
   bookAuthors: Author[] | null;
 
 
-//   @OneToMany(() => Loan, (loan) => loan.book)
- //  loans: Loan[];
+   @OneToMany(() => Loan, (loan) => loan.books)
+     loans: Relation <Loan>[];
 
    constructor(params?: IBook){
       Object.assign(this,params)

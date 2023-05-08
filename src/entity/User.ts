@@ -1,11 +1,14 @@
 import { Field, ObjectType } from "type-graphql"
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Repository, PrimaryColumn, } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Repository, PrimaryColumn, Relation, } from "typeorm"
 import { AppDataSource } from "../data-source.js"
 import  type { IUser } from "../interfaces/IUser.js"
 import  Loan from "./Loan.js"
-@Entity()
+
+
 @ObjectType("User")
-export default class User {
+@Entity()
+
+export default  class User implements IUser{
    private repository: Repository<User>
 
     @Field()
@@ -36,8 +39,8 @@ export default class User {
     @Column()
     password: string
 
-   @OneToMany(() => Loan, (loan) => loan.user)
-   loans: Loan[];
+    @OneToMany(() => Loan, (loan) => loan.user)
+    loans: Relation<Loan>[]
 
    constructor(params?: IUser){
       Object.assign(this,params)
