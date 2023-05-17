@@ -56,5 +56,11 @@ export default  class User implements IUser{
       return await this.repository.findOneBy({id: this.id});
    }
 
+   async validateUser():Promise <User | null> {
+      const user= await this.repository.findOneBy({email:this.email ,password :this.password })
+      return user ;
+   }
+
+
 }
 
