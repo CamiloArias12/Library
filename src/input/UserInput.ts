@@ -27,3 +27,24 @@ export class UserInput implements IUser{
    password: string
 
 }
+
+@InputType()
+export class UserInputPassword implements IUser{
+
+   id: number
+
+   firstName:string
+
+   lastName:string
+   
+   phone:string
+   
+   address:string
+   
+   @Field()
+   email:string
+
+   @Field()
+   password: string
+
+}

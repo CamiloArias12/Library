@@ -1,7 +1,7 @@
 import { Resolver, Query,Mutation, Arg } from "type-graphql";
 import  User  from "../entity/User.js";
 import {GraphQLError}from "graphql"
-import { UserInput, UserValidateInput } from "../input/UserInput.js";
+import { UserInput, UserInputPassword} from "../input/UserInput.js";
 
 
 @Resolver(User)
@@ -29,19 +29,14 @@ export class UserResolver{
 
    }
    @Mutation(()=> User) 
-   async userValidate(@Arg("validationUser") userInput: UserValidateInput ):Promise <User | null>{
-      console.log(userInput)
+   async userValidate(@Arg("login") userInput: UserInputPassword ){
       const user: User | null =new User()
-      user.email= userInput.email
-      user.password=userInput.password
-      
-      const validateUser= await user.validateUser()
       console.log(userInput)
-      console.log(validateUser)
+      user.email=userInput.email
+      user.password=userInput.password
 
-      return validateUser ?? null
+      return await user.validateUser() 
 
    }
-
 
 }
