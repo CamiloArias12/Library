@@ -40,6 +40,10 @@ export default class Author {
       return await this.repository.findOneBy({id: this.id});
    }
 
+    async findAuthorsAll(): Promise <Author[] | null>{
+      return await this.repository.find();
+   }
+
    async findAuthors(authors:number[]): Promise <Author[]>{
       return await this.repository.find(
 	 {where: {id : In(authors)}} 

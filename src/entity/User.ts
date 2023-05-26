@@ -39,6 +39,16 @@ export default  class User implements IUser{
     @Column()
     password: string
 
+
+   @Field()
+   @Column({default:true})
+   rol:boolean
+
+   @Field()
+   @Column({default:true})
+   isActive:boolean
+    
+
     @OneToMany(() => Loan, (loan) => loan.user)
     loans: Relation<Loan>[]
 
@@ -48,13 +58,24 @@ export default  class User implements IUser{
    }
 
 
-   async createUser(): Promise <void>{
-       await this.repository.save(this);
+   async createUser(): Promise <User | null>{
+       return await this.repository.save(this);
    }
 
    async findUser(): Promise <User | null>{
       return await this.repository.findOneBy({id: this.id});
    }
+   
+   async findUserAll(): Promise<User[] | null> {
+
+  try {
+    return await this.repository.find();
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return null;
+  }
+}
+
 
    async validateUser():Promise <User | null> {
       const user= await this.repository.findOneBy({email:this.email ,password :this.password })

@@ -48,6 +48,9 @@ export default class Loan implements ILoan{
       return await this.repository.findOneBy({id: this.id});
    }
 
+    async findLoans(): Promise <Loan[] | null>{
+      return await this.repository.find();
+      }
 
 }
 

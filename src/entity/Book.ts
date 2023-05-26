@@ -8,7 +8,7 @@ import  Loan  from './Loan.js';
 
 @ObjectType("Book")
 @Entity()
-export default class Book {
+export default class Book  implements IBook{
 
    private repository: Repository<Book>
 
@@ -29,16 +29,10 @@ export default class Book {
   area: string;
 
   @Field()
-  @Column({ nullable: true })
-  coverUrl: string;
+  @Column()
+  summary: string;
 
-  @Field()
-  @Column({ nullable: true })
-  digitalUrl: string;
 
-  @Field()
-  @Column({default:false})
-  physicalAvailability: boolean;
 
   @ManyToMany(() => Author )
   @JoinTable()
@@ -60,6 +54,9 @@ export default class Book {
 
    async findBook(): Promise <Book| null>{
       return await this.repository.findOneBy({id: this.id});
+   }
+   async findBooks(): Promise <Book[]| null>{
+      return await this.repository.find();
    }
 
 
