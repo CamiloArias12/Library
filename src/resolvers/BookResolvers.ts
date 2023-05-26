@@ -8,6 +8,11 @@ import  Author  from "../entity/Author.js";
 @Resolver(Book)
 export class BookResolver{
 
+   @Query(()=> [Book])
+   async getAllBook(){
+      let book = new Book()
+      return await book.findBooks()
+   }
 
 
    @Mutation(() => Book, { nullable: true })

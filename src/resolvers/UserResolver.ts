@@ -1,7 +1,7 @@
 import { Resolver, Query,Mutation, Arg } from "type-graphql";
 import  User  from "../entity/User.js";
 import {GraphQLError}from "graphql"
-import { UserInput, UserInputPassword} from "../input/UserInput.js";
+import { UserInput, UserLoginInput, UserUpdateAdmin } from "../input/UserInput.js";
 
 
 @Resolver(User)
@@ -14,6 +14,14 @@ export class UserResolver{
       user.id= userId
       return await user.findUser() ?? null
    }
+
+   @Query(()=>[ User])
+   async usersAll( ){
+      let user = new User()
+      let data= user.findUserAll()
+      return data
+   }
+
 
    @Mutation(()=> User) 
    async userCreate(@Arg("create") create: UserInput ){
@@ -28,15 +36,39 @@ export class UserResolver{
       }
 
    }
-   @Mutation(()=> User) 
-   async userValidate(@Arg("login") userInput: UserInputPassword ){
-      const user: User | null =new User()
-      console.log(userInput)
-      user.email=userInput.email
-      user.password=userInput.password
 
-      return await user.validateUser() 
+   @Mutation(()=> User) 
+   async userUpdate(@Arg("update") update: UserInput ): Promise<User | null>{
+      const user: User | null =new User(update)
+   
+	return await user.createUser()
+      }
+
+   @Mutation(()=> User) 
+   async userAdmin(@Arg("updateAdmin") updateAdmin: UserUpdateAdmin ): Promise<User | null>{
+      const user: User | null =new User()
+      user.id=updateAdmin.id
+      user.rol=updateAdmin.rol
+      user.isActive=updateAdmin.isActive
+	await user.createUser()
+	return await user.findUser();
+      }
+
+
+   @Mutation(()=> User) 
+   async userValidate(@Arg("validationUser") userInput: UserLoginInput ):Promise <User | null>{
+      console.log(userInput)
+      const user: User | null =new User()
+      user.email= userInput.email
+      user.password=userInput.password
+      
+      const validateUser= await user.validateUser()
+      console.log(userInput)
+      console.log(validateUser)
+
+      return validateUser 
 
    }
+
 
 }

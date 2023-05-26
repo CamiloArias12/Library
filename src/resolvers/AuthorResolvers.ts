@@ -8,6 +8,13 @@ import { AuthorInput } from "../input/AuthorInput.js";
 @Resolver(Author)
 export class AuthorResolver{
 
+   @Query(()=> [Author])
+   async getAllAuthor(){
+      let author = new Author()
+      return await author.findAuthorsAll()
+   }
+
+
    @Query(()=> Author)
    async author( @Arg('authorId')authorId: number){
       console.log("hello")
