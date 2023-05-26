@@ -1,4 +1,4 @@
-import { InputType, Field } from "type-graphql";
+import { Field, InputType } from "type-graphql";
 import { IUser } from "../interfaces/IUser.js";
 
 
@@ -29,7 +29,7 @@ export class UserInput implements IUser{
 }
 
 @InputType()
-export class UserInputPassword implements IUser{
+export class UserLoginInput implements IUser{
 
    id: number
 
@@ -48,3 +48,20 @@ export class UserInputPassword implements IUser{
    password: string
 
 }
+
+
+
+@InputType()
+export class UserUpdateAdmin{
+
+   @Field()
+   id:number
+
+   @Field()
+   isActive: boolean
+
+   @Field()
+   rol: boolean
+
+}
+

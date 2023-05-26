@@ -4,7 +4,11 @@ import  { IBook } from "../interfaces/IBook.js";
 @InputType()
 
 export class BookInput implements IBook {
- 
+
+
+  @Field()
+  id:number
+
   @Field()
   title: string;
 
@@ -15,14 +19,7 @@ export class BookInput implements IBook {
   area: string;
 
   @Field()
-  coverUrl: string;
-
-  @Field()
-  digitalUrl: string;
-
-  @Field()
-  physicalAvailable: boolean;
-
+  summary: string;
 
 
 
