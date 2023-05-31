@@ -21,6 +21,10 @@ export default class Author {
   @Column()
   nationality: string;
 
+  @Field()
+  @Column()
+  biography: string;
+
 
   @ManyToMany(() => Book)
   bookAuthors: Book[];
