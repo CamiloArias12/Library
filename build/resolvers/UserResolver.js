@@ -12,13 +12,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import User from "../entity/User.js";
-import { UserInput, UserInputPassword } from "../input/UserInput.js";
+import { UserInput, UserLoginInput, UserUpdateAdmin } from "../input/UserInput.js";
 let UserResolver = class UserResolver {
     async users(userId) {
         let user = new User();
         console.log("asjkfasdkjf");
         user.id = userId;
         return await user.findUser() ?? null;
+    }
+    async usersAll() {
+        let user = new User();
+        let data = user.findUserAll();
+        return data;
     }
     async userCreate(create) {
         console.log("Hello");
@@ -31,12 +36,27 @@ let UserResolver = class UserResolver {
             return null;
         }
     }
-    async userValidate(userInput) {
+    async userUpdate(update) {
+        const user = new User(update);
+        return await user.createUser();
+    }
+    async userAdmin(updateAdmin) {
         const user = new User();
+        user.id = updateAdmin.id;
+        user.rol = updateAdmin.rol;
+        user.isActive = updateAdmin.isActive;
+        await user.createUser();
+        return await user.findUser();
+    }
+    async userValidate(userInput) {
         console.log(userInput);
+        const user = new User();
         user.email = userInput.email;
         user.password = userInput.password;
-        return await user.validateUser();
+        const validateUser = await user.validateUser();
+        console.log(userInput);
+        console.log(validateUser);
+        return validateUser;
     }
 };
 __decorate([
@@ -47,6 +67,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "users", null);
 __decorate([
+    Query(() => [User]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "usersAll", null);
+__decorate([
     Mutation(() => User),
     __param(0, Arg("create")),
     __metadata("design:type", Function),
@@ -55,9 +81,23 @@ __decorate([
 ], UserResolver.prototype, "userCreate", null);
 __decorate([
     Mutation(() => User),
-    __param(0, Arg("login")),
+    __param(0, Arg("update")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [UserInputPassword]),
+    __metadata("design:paramtypes", [UserInput]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "userUpdate", null);
+__decorate([
+    Mutation(() => User),
+    __param(0, Arg("updateAdmin")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [UserUpdateAdmin]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "userAdmin", null);
+__decorate([
+    Mutation(() => User),
+    __param(0, Arg("validationUser")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [UserLoginInput]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "userValidate", null);
 UserResolver = __decorate([

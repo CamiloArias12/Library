@@ -21,16 +21,27 @@ let User = User_1 = class User {
     address;
     email;
     password;
+    rol;
+    isActive;
     loans;
     constructor(params) {
         Object.assign(this, params);
         this.repository = AppDataSource.getRepository(User_1);
     }
     async createUser() {
-        await this.repository.save(this);
+        return await this.repository.save(this);
     }
     async findUser() {
         return await this.repository.findOneBy({ id: this.id });
+    }
+    async findUserAll() {
+        try {
+            return await this.repository.find();
+        }
+        catch (error) {
+            console.error('Error fetching users:', error);
+            return null;
+        }
     }
     async validateUser() {
         const user = await this.repository.findOneBy({ email: this.email, password: this.password });
@@ -72,6 +83,16 @@ __decorate([
     Column(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    Field(),
+    Column({ default: true }),
+    __metadata("design:type", Boolean)
+], User.prototype, "rol", void 0);
+__decorate([
+    Field(),
+    Column({ default: true }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isActive", void 0);
 __decorate([
     OneToMany(() => Loan, (loan) => loan.user),
     __metadata("design:type", Array)

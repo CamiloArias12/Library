@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { InputType, Field } from "type-graphql";
+import { Field, InputType } from "type-graphql";
 let UserInput = class UserInput {
     id;
     firstName;
@@ -49,7 +49,7 @@ UserInput = __decorate([
     InputType()
 ], UserInput);
 export { UserInput };
-let UserInputPassword = class UserInputPassword {
+let UserLoginInput = class UserLoginInput {
     id;
     firstName;
     lastName;
@@ -61,13 +61,34 @@ let UserInputPassword = class UserInputPassword {
 __decorate([
     Field(),
     __metadata("design:type", String)
-], UserInputPassword.prototype, "email", void 0);
+], UserLoginInput.prototype, "email", void 0);
 __decorate([
     Field(),
     __metadata("design:type", String)
-], UserInputPassword.prototype, "password", void 0);
-UserInputPassword = __decorate([
+], UserLoginInput.prototype, "password", void 0);
+UserLoginInput = __decorate([
     InputType()
-], UserInputPassword);
-export { UserInputPassword };
+], UserLoginInput);
+export { UserLoginInput };
+let UserUpdateAdmin = class UserUpdateAdmin {
+    id;
+    isActive;
+    rol;
+};
+__decorate([
+    Field(),
+    __metadata("design:type", Number)
+], UserUpdateAdmin.prototype, "id", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", Boolean)
+], UserUpdateAdmin.prototype, "isActive", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", Boolean)
+], UserUpdateAdmin.prototype, "rol", void 0);
+UserUpdateAdmin = __decorate([
+    InputType()
+], UserUpdateAdmin);
+export { UserUpdateAdmin };
 //# sourceMappingURL=UserInput.js.map

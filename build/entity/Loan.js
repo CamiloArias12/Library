@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var Loan_1;
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import Book from './Book.js';
 import { AppDataSource } from '../data-source.js';
 import { Field, ObjectType } from 'type-graphql';
@@ -26,10 +26,35 @@ let Loan = Loan_1 = class Loan {
         this.repository = AppDataSource.getRepository(Loan_1);
     }
     async createLoan() {
-        await this.repository.save(this);
+        try {
+            await this.repository.save(this);
+            console.log("Loan saved successfully");
+        }
+        catch (error) {
+            console.error("Error saving loan:", error);
+        }
     }
     async findLoan() {
         return await this.repository.findOneBy({ id: this.id });
+    }
+    async findLoans() {
+        return await this.repository.find();
+    }
+    async deleteLoan() {
+        return await this.repository.delete({ id: this.id }).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+    }
+    async findLoanUser() {
+        return await this.repository.find({
+            where: {
+                user: {
+                    id: this.user.id
+                }
+            }
+        });
     }
 };
 __decorate([
@@ -49,16 +74,16 @@ __decorate([
 ], Loan.prototype, "returnDate", void 0);
 __decorate([
     Field(),
-    Column(),
+    Column({ default: false }),
     __metadata("design:type", Boolean)
 ], Loan.prototype, "returned", void 0);
 __decorate([
-    OneToMany(() => User, (user) => user.loans),
+    ManyToOne(() => User, (user) => user.loans),
     __metadata("design:type", Object)
 ], Loan.prototype, "user", void 0);
 __decorate([
     ManyToOne(() => Book, (book) => book.loans),
-    __metadata("design:type", Array)
+    __metadata("design:type", Object)
 ], Loan.prototype, "books", void 0);
 Loan = Loan_1 = __decorate([
     ObjectType("Loan"),

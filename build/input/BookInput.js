@@ -9,13 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { InputType, Field, } from "type-graphql";
 let BookInput = class BookInput {
+    id;
     title;
     publisher;
     area;
-    coverUrl;
-    digitalUrl;
-    physicalAvailable;
+    summary;
 };
+__decorate([
+    Field({ nullable: true }),
+    __metadata("design:type", Number)
+], BookInput.prototype, "id", void 0);
 __decorate([
     Field(),
     __metadata("design:type", String)
@@ -31,15 +34,7 @@ __decorate([
 __decorate([
     Field(),
     __metadata("design:type", String)
-], BookInput.prototype, "coverUrl", void 0);
-__decorate([
-    Field(),
-    __metadata("design:type", String)
-], BookInput.prototype, "digitalUrl", void 0);
-__decorate([
-    Field(),
-    __metadata("design:type", Boolean)
-], BookInput.prototype, "physicalAvailable", void 0);
+], BookInput.prototype, "summary", void 0);
 BookInput = __decorate([
     InputType()
 ], BookInput);

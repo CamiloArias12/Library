@@ -3,13 +3,16 @@ import { IAuthor } from "../interfaces/IAuthor.js";
 
 @InputType()
 export class AuthorInput implements IAuthor {
-  @Field({nullable:true})
+  @Field()
   id: number;
 
-  @Field({nullable:true})
+  @Field()
   name: string;
 
-  @Field({nullable:true})
+  @Field()
   nationality: string;
+
+  @Field()
+  biography: string;
 }
 

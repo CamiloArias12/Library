@@ -6,7 +6,7 @@ import  { IBook } from "../interfaces/IBook.js";
 export class BookInput implements IBook {
 
 
-  @Field()
+  @Field({nullable:true})
   id:number
 
   @Field()

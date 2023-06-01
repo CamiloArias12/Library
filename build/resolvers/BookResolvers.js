@@ -10,11 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Resolver, Mutation, Arg, Int } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Int } from "type-graphql";
 import Book from "../entity/Book.js";
 import { BookInput } from "../input/BookInput.js";
 import Author from "../entity/Author.js";
 let BookResolver = class BookResolver {
+    async getBook(idBook) {
+        let book = new Book();
+        book.id = idBook;
+        return await book.findBook();
+    }
+    async deleteBook(idBook) {
+        let book = new Book();
+        book.id = idBook;
+        return await book.deleteBook();
+    }
+    async getAllBook() {
+        let book = new Book();
+        return await book.findBooks();
+    }
     async bookCreate(create, authorIds) {
         let book = new Book(create);
         let author = new Author();
@@ -25,6 +39,26 @@ let BookResolver = class BookResolver {
         return await book.findBook();
     }
 };
+__decorate([
+    Query(() => Book),
+    __param(0, Arg('idBook')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookResolver.prototype, "getBook", null);
+__decorate([
+    Query(() => Boolean),
+    __param(0, Arg('idBook')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookResolver.prototype, "deleteBook", null);
+__decorate([
+    Query(() => [Book]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], BookResolver.prototype, "getAllBook", null);
 __decorate([
     Mutation(() => Book, { nullable: true }),
     __param(0, Arg("create")),

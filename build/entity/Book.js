@@ -19,9 +19,7 @@ let Book = Book_1 = class Book {
     title;
     publisher;
     area;
-    coverUrl;
-    digitalUrl;
-    physicalAvailability;
+    summary;
     bookAuthors;
     loans;
     constructor(params) {
@@ -33,6 +31,18 @@ let Book = Book_1 = class Book {
     }
     async findBook() {
         return await this.repository.findOneBy({ id: this.id });
+    }
+    async findBooks() {
+        return await this.repository.find();
+    }
+    async deleteBook() {
+        return await this.repository.delete({ id: this.id }).then(() => {
+            console.log("book delete");
+            return true;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        });
     }
 };
 __decorate([
@@ -57,19 +67,9 @@ __decorate([
 ], Book.prototype, "area", void 0);
 __decorate([
     Field(),
-    Column({ nullable: true }),
+    Column(),
     __metadata("design:type", String)
-], Book.prototype, "coverUrl", void 0);
-__decorate([
-    Field(),
-    Column({ nullable: true }),
-    __metadata("design:type", String)
-], Book.prototype, "digitalUrl", void 0);
-__decorate([
-    Field(),
-    Column({ default: false }),
-    __metadata("design:type", Boolean)
-], Book.prototype, "physicalAvailability", void 0);
+], Book.prototype, "summary", void 0);
 __decorate([
     ManyToMany(() => Author),
     JoinTable(),

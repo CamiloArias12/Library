@@ -13,7 +13,7 @@ const server = new ApolloServer({
     schema: schema,
 });
 const { url } = await startStandaloneServer(server, {
-    listen: { port: 8080 }
+    listen: { port: 4000 }
 });
 console.log(url);
 //# sourceMappingURL=index.js.map

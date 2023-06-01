@@ -12,19 +12,24 @@ let AuthorInput = class AuthorInput {
     id;
     name;
     nationality;
+    biography;
 };
 __decorate([
-    Field({ nullable: true }),
+    Field(),
     __metadata("design:type", Number)
 ], AuthorInput.prototype, "id", void 0);
 __decorate([
-    Field({ nullable: true }),
+    Field(),
     __metadata("design:type", String)
 ], AuthorInput.prototype, "name", void 0);
 __decorate([
-    Field({ nullable: true }),
+    Field(),
     __metadata("design:type", String)
 ], AuthorInput.prototype, "nationality", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", String)
+], AuthorInput.prototype, "biography", void 0);
 AuthorInput = __decorate([
     InputType()
 ], AuthorInput);

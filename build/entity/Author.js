@@ -17,6 +17,7 @@ let Author = Author_1 = class Author {
     id;
     name;
     nationality;
+    biography;
     bookAuthors;
     constructor(params) {
         Object.assign(this, params);
@@ -28,8 +29,20 @@ let Author = Author_1 = class Author {
     async findAuthor() {
         return await this.repository.findOneBy({ id: this.id });
     }
+    async findAuthorsAll() {
+        return await this.repository.find();
+    }
     async findAuthors(authors) {
         return await this.repository.find({ where: { id: In(authors) } });
+    }
+    async deleteAuthor() {
+        return await this.repository.delete({ id: this.id }).then(() => {
+            console.log("book delete");
+            return true;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        });
     }
 };
 __decorate([
@@ -47,6 +60,11 @@ __decorate([
     Column(),
     __metadata("design:type", String)
 ], Author.prototype, "nationality", void 0);
+__decorate([
+    Field(),
+    Column(),
+    __metadata("design:type", String)
+], Author.prototype, "biography", void 0);
 __decorate([
     ManyToMany(() => Book),
     __metadata("design:type", Array)

@@ -53,6 +53,16 @@ export default class Author {
 	 {where: {id : In(authors)}} 
       );
    }
+   async deleteAuthor(): Promise<Boolean>{
+	  return await this.repository.delete({id:this.id}).then(()=>{
+		  console.log("book delete")
+		  return true
+	       }).catch((error)=>{ 
+		  console.log(error)
+		  return false})
+
+   }
+
 
 }
 

@@ -3,8 +3,6 @@ import type { ILoan } from "../interfaces/ILoan.js";
 
 @InputType()
 export class LoanInput implements ILoan {
-  @Field()
-  id: number;
 
   @Field()
   startDate: Date;
@@ -13,10 +11,28 @@ export class LoanInput implements ILoan {
   returnDate: Date;
 
   @Field()
-  returned: boolean;
+  userId: number;
 
   @Field()
-  userId: number;
+  bookId: number;
+}
+
+
+@InputType()
+export class LoanInputUpdate implements ILoan {
+
+  @Field()
+  id:number
+
+  @Field()
+  returned:boolean
+
+  @Field()
+  startDate: Date;
+
+  @Field()
+  returnDate: Date;
+
 
   @Field()
   bookId: number;

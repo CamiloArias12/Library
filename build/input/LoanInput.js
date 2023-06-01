@@ -9,17 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { InputType, Field, } from "type-graphql";
 let LoanInput = class LoanInput {
-    id;
     startDate;
     returnDate;
-    returned;
     userId;
     bookId;
 };
-__decorate([
-    Field(),
-    __metadata("design:type", Number)
-], LoanInput.prototype, "id", void 0);
 __decorate([
     Field(),
     __metadata("design:type", Date)
@@ -28,10 +22,6 @@ __decorate([
     Field(),
     __metadata("design:type", Date)
 ], LoanInput.prototype, "returnDate", void 0);
-__decorate([
-    Field(),
-    __metadata("design:type", Boolean)
-], LoanInput.prototype, "returned", void 0);
 __decorate([
     Field(),
     __metadata("design:type", Number)
@@ -44,4 +34,35 @@ LoanInput = __decorate([
     InputType()
 ], LoanInput);
 export { LoanInput };
+let LoanInputUpdate = class LoanInputUpdate {
+    id;
+    returned;
+    startDate;
+    returnDate;
+    bookId;
+};
+__decorate([
+    Field(),
+    __metadata("design:type", Number)
+], LoanInputUpdate.prototype, "id", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", Boolean)
+], LoanInputUpdate.prototype, "returned", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", Date)
+], LoanInputUpdate.prototype, "startDate", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", Date)
+], LoanInputUpdate.prototype, "returnDate", void 0);
+__decorate([
+    Field(),
+    __metadata("design:type", Number)
+], LoanInputUpdate.prototype, "bookId", void 0);
+LoanInputUpdate = __decorate([
+    InputType()
+], LoanInputUpdate);
+export { LoanInputUpdate };
 //# sourceMappingURL=LoanInput.js.map

@@ -14,18 +14,42 @@ import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import Author from "../entity/Author.js";
 import { AuthorInput } from "../input/AuthorInput.js";
 let AuthorResolver = class AuthorResolver {
+    async getAllAuthor() {
+        let author = new Author();
+        return await author.findAuthorsAll();
+    }
     async author(authorId) {
-        console.log("hello");
         let author = new Author();
         author.id = authorId;
         return await author.findAuthor();
     }
+    async authorDelete(authorId) {
+        let author = new Author();
+        author.id = authorId;
+        return await author.deleteAuthor();
+    }
     async authorCreate(create) {
         let author = new Author(create);
+        if (await author.findAuthor() == null) {
+            await author.createAuthor();
+            return await author.findAuthor();
+        }
+        else {
+            return null;
+        }
+    }
+    async authorUpdate(update) {
+        let author = new Author(update);
         await author.createAuthor();
         return await author.findAuthor();
     }
 };
+__decorate([
+    Query(() => [Author]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AuthorResolver.prototype, "getAllAuthor", null);
 __decorate([
     Query(() => Author),
     __param(0, Arg('authorId')),
@@ -34,12 +58,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthorResolver.prototype, "author", null);
 __decorate([
+    Query(() => Boolean),
+    __param(0, Arg('authorId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], AuthorResolver.prototype, "authorDelete", null);
+__decorate([
     Mutation(() => Author),
     __param(0, Arg("create")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [AuthorInput]),
     __metadata("design:returntype", Promise)
 ], AuthorResolver.prototype, "authorCreate", null);
+__decorate([
+    Mutation(() => Author),
+    __param(0, Arg("update")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [AuthorInput]),
+    __metadata("design:returntype", Promise)
+], AuthorResolver.prototype, "authorUpdate", null);
 AuthorResolver = __decorate([
     Resolver(Author)
 ], AuthorResolver);

@@ -68,20 +68,18 @@ export default  class User implements IUser{
    
    async findUserAll(): Promise<User[] | null> {
 
-  try {
-    return await this.repository.find();
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    return null;
-  }
-}
-
+      try {
+	 return await this.repository.find();
+      } catch (error) {
+	 console.error('Error fetching users:', error);
+      return null;
+      }
+   }
 
    async validateUser():Promise <User | null> {
       const user= await this.repository.findOneBy({email:this.email ,password :this.password })
       return user ;
    }
-
 
 }
 
